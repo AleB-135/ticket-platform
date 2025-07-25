@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifica ticket</title>
+
+    <th-block th:replace="~{ fragments/head :: styles }"></th-block>
+</head>
+
+<body>
+    <!-- NAVBAR + TITOLO -->
+    <header>
+        <nav th:replace="~{ fragments/navbar :: navbar }"></nav>
+    </header>
+
+    <main class="container">
+        <section class="games-content">
+            <div class="col-12">
+                <section class="upper-row text-center mt-3">
+                    <h3 class="fw-bold">Stai modificando il ticket:</h3>
+                    <h4>"[[${ticket.ticketTitle}]]"</h4>
+                    <h5> Ticket id: [[${ticket.ticketId}]]</h5>
+                </section>
+            </div>
+
+            <!-- FORM DETTAGLI TICKET (CREATORE, TITOLO, DATA...) -->
+            <div class="col-12">
+                <form th:action="@{/tickets/{id}(id=${ticket.ticketId})}" method="post" th:object="${ticket}">
+                    <input type="hidden" th:field="*{ticketId}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Titolo ticket:</label>
+                        <input type="text" class="form-control" id="title" th:field="*{ticketTitle}"
+                            th:errorClass="is-invalid" required>
+
+                        <div th:if="${#fields.hasErrors('ticketTitle')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('ticketTitle')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="ticketCreator" class="form-label">Creatore ticket:</label>
+                        <input type="text" class="form-control" id="ticketCreator" th:field="*{ticketCreator}"
+                            th:errorClass="is-invalid" required>
+
+                        <div th:if="${#fields.hasErrors('ticketCreator')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('ticketCreator')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="ticketDate" class="form-label">Data ticket:</label>
+                        <input type="date" class="form-control" id="ticketDate" th:field="*{ticketDate}"
+                            th:errorClass="is-invalid" required>
+
+                        <div th:if="${#fields.hasErrors('ticketDate')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('ticketDate')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="details" class="form-label">Dettagli ticket:</label>
+                        <textarea class="form-control" id="details" th:field="*{details}" rows="5"
+                            th:errorClass="is-invalid" required></textarea>
+
+                        <div th:if="${#fields.hasErrors('details')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('details')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex justify-content-evenly p-2">
+                        <div class="mb-3">
+                            <label for="ticket-state" class="form-label">Stato ticket:</label>
+                            <div class="form-check">
+                                <input value="Da fare" class="form-check-input" type="radio" id="todo-ticket" th:field="*{ticketState}"
+                                th:errorClass="is-invalid" required>
+                                <label class="form-check-label" for="todo-ticket">
+                                    Da fare
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="In corso" class="form-check-input" type="radio" id="current-ticket" th:field="*{ticketState}"
+                                th:errorClass="is-invalid" required>
+                                <label class="form-check-label" for="current-ticket">
+                                    In corso
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="Completato" class="form-check-input" type="radio" id="completed-ticket" th:field="*{ticketState}"
+                                th:errorClass="is-invalid" required>
+                                <label class="form-check-label" for="completed-ticket">
+                                    Completato
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="operators" class="form-label">Operatore assegnato:</label>
+                            <div class="form-check">
+                                <input value="M. Rossi" class="form-check-input" type="radio" id="operator-rossi" th:field="*{assignedOperator}"
+                                th:errorClass="is-invalid" required>
+                                <label class="form-check-label" for="operator-rossi">
+                                    M. Rossi
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="P. Vitali" class="form-check-input" type="radio" id="operator-vitali" th:field="*{assignedOperator}"
+                                th:errorClass="is-invalid" required>
+                                <label class="form-check-label" for="operator-vitali">
+                                    P. Vitali
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="D. Ferri" class="form-check-input" type="radio" id="operator-ferri" th:field="*{assignedOperator}"
+                                th:errorClass="is-invalid" required>
+                                <label class="form-check-label" for="operator-ferri">
+                                    D. Ferri
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BOTTONI MODIFICA & RESET -->
+                    <div class="mb-3 d-flex justify-content-evenly">
+                        <button class="btn btn-primary w-25" type="submit">Modifica ticket</button>
+                        <button class="btn btn-warning w-25" type="reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}">
+    </footer>
+</body>
+
+</html>

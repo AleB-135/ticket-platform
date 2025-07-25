@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creazione ticket</title>
+
+    <th-block th:replace="~{fragments/head :: styles}"></th-block>
+</head>
+
+<body>
+    <!-- NAVBAR + TITOLO -->
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main class="container">
+        <section class="upper-row">
+            <div class="col-12 text-center p-2">
+                <h1 class="fw-bold">
+                    Creazione nota per "[[${ticket.ticketTitle}]]"
+                </h1>
+            </div>
+        </section>
+        <section class="notes-content">
+            <div class="col-12">
+
+                <!-- GESTIONE CREAZIONE CON POST -->
+                <form class="row g-3" th:action="@{/notes/create}" method="post" th:object="${note}">
+
+                     <input type="hidden" th:field="*{ticket}" id="note-id">
+
+                    <!-- FORM DETTAGLI TICKET (CREATORE, TITOLO, DATA...) -->
+                    <div class="col-md-12">
+                        <label for="note-author" class="form-label">Creatore nota</label>
+                        <input type="text" class="form-control" id="note-author" th:field="*{noteAuthor}"
+                            th:errorClass="is-invalid" required>
+                        <div th:if="${#fields.hasErrors('noteAuthor')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('noteAuthor')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                     <div class="col-md-12">
+                        <label for="note-date" class="form-label">Data creazione nota</label>
+                        <input type="date" class="form-control" id="note-date" th:field="*{noteCreationDate}"
+                            th:errorClass="is-invalid" required>
+                        <div th:if="${#fields.hasErrors('noteCreationDate')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('noteCreationDate')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="note-text" class="form-label">Testo nota:</label>
+                        <textarea class="form-control" id="note-text" th:field="*{noteText}"
+                            th:errorClass="is-invalid" rows="5" required></textarea>
+                        <div th:if="${#fields.hasErrors('noteText')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('noteText')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <!-- BOTTONI CREAZIONE NOTA & RESET -->
+                    <div class="col-md-12 m-3 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary me-3 w-25">Crea nota</button>
+                        <button type="reset" class="btn btn-warning me-3 w-25">Reset</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </section>
+    </main>
+
+
+</body>
+
+</html>
