@@ -42,7 +42,8 @@
 
                         <div class="ticket-details">
                             <h3>[[${ticket.ticketTitle}]]</h3>
-                            <p class="card-text p-3">[[${ticket.details}]]</p>
+                            <p class="card-text p-3">[[${ticket.ticketDetails}]]</p>
+                            <!-- Capire perché non spunta il testo dei ticket -->
                         </div>
 
 
@@ -57,12 +58,91 @@
 
                 <!-- BOTTONE AGGIUNGI NOTA -->
                 <div class="text-center mt-3">
-                    <a th:href="@{|/tickets/notes/${ticket.ticketId}|}" class="btn btn-md btn-primary mb-3 p-3">Aggiungi nota</a>
-                </div> 
+                    <a th:href="@{|/tickets/notes/${ticket.ticketId}|}" class="btn btn-md btn-primary mb-3 p-3">Aggiungi
+                        nota</a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TABELLA NOTE -->
+        <section class="note-table row">
+            <table class="col-8 table table-hover table-striped" th:if="${ticket.notes.size() > 0}">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Autore nota</th>
+                        <th>Data creazione nota</th>
+                        <th>Testo nota</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="note : ${ticket.notes}" th:object="${note}">
+                        <td th:text="*{noteId}"></td>
+                        <td th:text="*{noteAuthor}"></td>
+                        <td th:text="*{noteCreationDate}"></td>
+                        <td th:text="*{noteText}"></td>
+
+                        <!-- BOTTONI PER OPERAZIONI -->
+                        <td>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end me-5">
+                                <a th:href="@{/notes/edit/{id}(id=*{noteId})}"
+                                    class="btn btn-sm btn-warning g-3">Modifica</a>
+
+                                <!-- TASTO DELETE + MODALE -->
+                                <button type="button" class="d-inline btn btn-danger btn-sm" data-bs-toggle="modal"
+                                    th:data-bs-target="'#delete-modal-' + *{noteId}">
+                                    Elimina
+                                </button>
+
+                                <div class="modal fade" th:id="'delete-modal-' + *{noteId}" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Eliminazione della
+                                                    nota del ticket: <strong>"[[${ticket.ticketTitle}]]"</strong> creata
+                                                    il
+                                                    <strong>[[*{noteCreationDate}]]</strong>
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Sei sicuro di voler eliminare la nota del ticket:
+                                                    <strong>"[[${ticket.ticketTitle}]]"</strong> creata il
+                                                    <strong>[[*{noteCreationDate}]]</strong> con id
+                                                    <strong>[[*{noteId}]]</strong>?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Chiudi</button>
+                                                <form th:action="@{|/notes/delete/*{noteId}|}" method="post"
+                                                    class="d-inline">
+                                                    <button type="submit" class="btn btn-danger">Elimina</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="text-center m-5" th:unless="${ticket.notes.size() > 0}">
+                Non ci sono note da mostrare per questo ticket
+            </h2>
 
             </div>
         </section>
     </main>
+    <th-block th:replace="~{fragments/footer :: scripts}"></th-block>
 </body>
 
 </html>

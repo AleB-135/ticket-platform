@@ -3,6 +3,7 @@ package org.lessons.java.platform.ticket.ticket_platform.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,7 +33,7 @@ public class Ticket {
     @Lob
     @Size(min = 10, max = 2000, message = "Il ticket deve avere un minimo di 10 caratteri e un massimo di 2000")
     @NotBlank(message = "I dettagli del ticket non possono essere vuoti")
-    private String details;
+    private String ticketDetails;
 
     @NotBlank(message = "Lo stato del ticket non può essere vuoto")
     private String ticketState;
@@ -45,7 +46,7 @@ public class Ticket {
     @NotNull (message = "La data del ticket non può essere vuota")
     private LocalDate ticketDate;
 
-    @OneToMany (mappedBy = "ticket")
+    @OneToMany (mappedBy = "ticket", cascade = {CascadeType.REMOVE})
     private List <Note> notes;
 
 
@@ -84,13 +85,15 @@ public class Ticket {
         this.ticketCreator = ticketCreator;
     }
 
-    public String getDetails() {
-        return this.details;
+
+    public String getTicketDetails() {
+        return this.ticketDetails;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public void setTicketDetails(String ticketDetails) {
+        this.ticketDetails = ticketDetails;
     }
+   
 
     public String getTicketState() {
         return this.ticketState;
