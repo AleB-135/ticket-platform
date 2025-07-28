@@ -35,7 +35,7 @@ public class Ticket {
     @NotBlank(message = "I dettagli del ticket non possono essere vuoti")
     private String ticketDetails;
 
-    @NotBlank(message = "Lo stato del ticket non può essere vuoto")
+    @NotNull(message = "Lo stato del ticket deve essere esplicitato")
     private String ticketState;
 
     @NotBlank (message = "L'operatore assegnato dev'essere specificato")
