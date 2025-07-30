@@ -26,4 +26,50 @@ public class Operator {
 
     //@OneToMany(mappedBy = "operator", cascade = {CascadeType.REMOVE})
     //private List<Ticket> tikets;
+
+
+    public Integer getOperatorId() {
+        return this.operatorId;
+    }
+
+    public void setOperatorId(Integer operatorId) {
+        this.operatorId = operatorId;
+    }
+
+    public String getOperatorName() {
+        return this.operatorName;
+    }
+
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
+    }
+
+    public String getOperatorEmail() {
+        return this.operatorEmail;
+    }
+
+    public void setOperatorEmail(String operatorEmail) {
+        this.operatorEmail = operatorEmail;
+    }
+
+    public String getOperatorPassword() {
+        return this.operatorPassword;
+    }
+
+    public void setOperatorPassword(String operatorPassword) {
+        this.operatorPassword = operatorPassword;
+    }
+
+    public boolean isNotAvailable() {
+        return this.notAvailable;
+    }
+
+    public boolean getNotAvailable() {
+        return this.notAvailable;
+    }
+
+    public void setNotAvailable(boolean notAvailable) {
+        this.notAvailable = notAvailable;
+    }
+
 }
