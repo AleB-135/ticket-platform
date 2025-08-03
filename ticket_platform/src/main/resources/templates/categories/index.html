@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorie Ticket</title>
+    <th-block th:replace="~{fragments/head :: styles}"></th-block>
+</head>
+
+<body>
+    <!-- NAVBAR + TITOLO -->
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main class="container">
+        <section class="upper-row">
+            <div class="col-12 text-center p-2">
+                <h1 class="fw-bold">
+                    Categorie
+                </h1>
+            </div>
+        </section>
+
+        <!-- NUMERO DI TICKET A SCHERMO
+        <section class="categories-content">
+            <div class="col-12">
+                <h2 class="text-center mb-3">
+                    Hai [[${categories.size()}]] ticket da visualizzare
+                </h2>
+                <div class="buttons mb-4 px-1 d-flex justify-content-between">
+                    <a th:href="@{/categories/create}" class="btn btn-lg btn-primary">Crea un nuovo ticket</a>
+
+                    BARRA DI RICERCA
+                    
+                    <div class="input-group w-25"> 
+                        <form th:action="@{/categories}" class="d-inline-block d-flex" method="get">
+                        <input type="search" class="form-control"
+                            aria-label="Ticket da cercare" placeholder="Ticket da cercare" aria-describedby="button-addon2" name="query">
+                        <button class="btn btn-outline-primary" type="submit" id="button-addon2">Cerca</button>
+                        </form>
+                    </div>
+    
+                </div>
+            </div> -->
+
+            <!-- TABELLA -->
+            <div class="col-12">
+                <table class="table table-hover table-striped table-dark" th:if="${categories.size() > 0}">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome categoria</th>
+                            <th>Tickets associati</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="category : ${categories}" th:object="${category}">
+                            <td>[[*{categoryId}]]</td>
+                            <td>[[*{categoryName}]]</td>
+                            <td>[[*{tickets.size()}]]</td>
+                    </tbody>
+                </table>
+
+                <h2 class="text-center m-5" th:unless="${categories.size() > 0}">
+                    Non ci sono categorie da mostrare
+                </h2>
+
+            </div>
+        </section>
+    </main>
+
+<th-block th:replace="~{fragments/footer :: scripts}"></th-block>
+</body>
+
+</html>

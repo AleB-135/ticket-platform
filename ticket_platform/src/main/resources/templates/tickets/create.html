@@ -25,8 +25,8 @@
 
 
                 <!-- GESTIONE CREAZIONE CON POST -->
-                <form class="row g-3" th:action="@{/tickets}" method="post" th:object="${ticket}">
-
+                <form class="row g-3" th:action="@{/tickets}" method="POST" th:object="${ticket}">
+                    <input type="hidden" th:field="*{ticketId}">
                     <!-- FORM DETTAGLI TICKET (CREATORE, TITOLO, DATA...) -->
                     <div class="col-md-12">
                         <label for="creatore-ticket" class="form-label">Creatore ticket</label>
@@ -47,6 +47,23 @@
                         <div th:if="${#fields.hasErrors('ticketTitle')}" class="invalid-feedback">
                             <ul>
                                 <li th:each="error : ${#fields.errors('ticketTitle')}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <label for="ticket-category" class="form-label">Categoria ticket</label>
+                        <select class="form-select" aria-label="Default select example"
+                            th:field="*{category.categoryId}" th:errorClass="is-invalid" required>
+                            <option th:each="category : ${categories}" th:value="${category.categoryId}"
+                                th:text="${category.categoryName}">
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('category.categoryId')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('category.categoryId')}" th:text="${error}">
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -78,26 +95,39 @@
 
                     <div class="col-md-6">
                         <label for="inputState" class="form-label">Operatore da assegnare</label>
-                         <select id="inputState" class="form-select" th:field="*{assignedOperator}" th:errorClass="is-invalid" required>
-                            <option value="M.Rossi">M. Rossi</option>
-                            <option value="P. Vitali">P. Vitali</option>
-                            <option value="D. Ferri">D. Ferri</option>
-                        </select> 
-                        <div th:if="${#fields.hasErrors('assignedOperator')}" class="invalid-feedback">
+                        <select class="form-select" id="inputState" th:field="*{assignedOperator.operatorId}" required>
+                            <option disabled selected value="">Seleziona un operatore</option>
+                            
+                            <option th:each="operator : ${operators}" th:value="${operator.operatorId}"
+                                th:text="${operator.operatorName}">
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('assignedOperator.operatorId')}" class="invalid-feedback">
                             <ul>
-                                <li th:each="error : ${#fields.errors('assignedOperator')}" th:text="${error}"></li>
+                                <li th:each="error : ${#fields.errors('assignedOperator.operatorId')}"
+                                    th:text="${error}"></li>
                             </ul>
                         </div>
                     </div>
 
 
                     <div class="col-md-6">
-                        <label for="stato-ticket" class="form-label">Stato ticket</label>
-                        <select id="stato-ticket" class="form-select" th:field="*{ticketState}" th:errorClass="is-invalid" required>
-                            <option value="Da fare">Da fare</option>
-                            <option value="In corso">In corso</option>
-                            <option value="Completato">Completato</option>
-                        </select>
+                        <label for="ticket-state" class="form-label">Stato ticket:</label>
+                        <div class="form-check">
+                            <input value="DA_FARE" class="form-check-input" type="radio" id="todo-ticket"
+                                th:field="*{ticketState}" th:errorClass="is-invalid" required>
+                            <label class="form-check-label" for="todo-ticket">Da fare</label>
+                        </div>
+                        <div class="form-check">
+                            <input value="IN_CORSO" class="form-check-input" type="radio" id="current-ticket"
+                                th:field="*{ticketState}" th:errorClass="is-invalid" required>
+                            <label class="form-check-label" for="current-ticket">In corso</label>
+                        </div>
+                        <div class="form-check">
+                            <input value="COMPLETATO" class="form-check-input" type="radio" id="completed-ticket"
+                                th:field="*{ticketState}" th:errorClass="is-invalid" required>
+                            <label class="form-check-label" for="completed-ticket">Completato</label>
+                        </div>
                         <div th:if="${#fields.hasErrors('ticketState')}" class="invalid-feedback">
                             <ul>
                                 <li th:each="error : ${#fields.errors('ticketState')}" th:text="${error}"></li>

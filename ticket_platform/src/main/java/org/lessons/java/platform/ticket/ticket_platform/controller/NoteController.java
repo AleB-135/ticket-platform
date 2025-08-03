@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 import jakarta.validation.Valid;
 
 @Controller
@@ -21,6 +22,7 @@ public class NoteController {
 
     @Autowired
     private NoteRepository noteRepository;
+    
 
     @PostMapping
     public String store(@Valid @ModelAttribute("note") Note noteForm, BindingResult bindingResult, Model model){

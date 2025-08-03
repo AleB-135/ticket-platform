@@ -51,6 +51,7 @@
                             <th>Titolo ticket</th>
                             <th>Autore ticket</th>
                             <th>Data ticket</th>
+                            <th>Categoria</th>
                             <th>Operatore assegnato</th>
                             <th>Stato ticket</th>
                             <th></th>
@@ -62,6 +63,7 @@
                             <td th:text="*{ticketTitle}"></td>
                             <td th:text="*{ticketCreator}"></td>
                             <td th:text="*{ticketDate}"></td>
+                            <td th:text="*{category.categoryName}"></td>
                             <td th:text="*{assignedOperator}"></td>
                             <td th:text="*{ticketState}"></td>
 

@@ -43,7 +43,6 @@
                         <div class="ticket-details">
                             <h3>[[${ticket.ticketTitle}]]</h3>
                             <p class="card-text p-3">[[${ticket.ticketDetails}]]</p>
-                            <!-- Capire perché non spunta il testo dei ticket -->
                         </div>
 
 
@@ -58,8 +57,9 @@
 
                 <!-- BOTTONE AGGIUNGI NOTA -->
                 <div class="text-center mt-3">
-                    <a th:href="@{|/tickets/notes/${ticket.ticketId}|}" class="btn btn-md btn-primary mb-3 p-3">Aggiungi
-                        nota</a>
+                    <a th:href="@{|/tickets/notes/${ticket.ticketId}|}" class="btn btn-md btn-primary mb-3 p-3">
+                        Aggiungi nota
+                    </a>
                 </div>
 
             </div>
@@ -88,7 +88,9 @@
                         <td>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end me-5">
                                 <a th:href="@{/notes/edit/{id}(id=*{noteId})}"
-                                    class="btn btn-sm btn-warning g-3">Modifica</a>
+                                    class="btn btn-sm btn-warning g-3">
+                                    Modifica
+                                </a>
 
                                 <!-- TASTO DELETE + MODALE -->
                                 <button type="button" class="d-inline btn btn-danger btn-sm" data-bs-toggle="modal"
@@ -104,8 +106,7 @@
                                             <div class="modal-header">
                                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Eliminazione della
                                                     nota del ticket: <strong>"[[${ticket.ticketTitle}]]"</strong> creata
-                                                    il
-                                                    <strong>[[*{noteCreationDate}]]</strong>
+                                                    il <strong>[[*{noteCreationDate}]]</strong>
                                                 </h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
@@ -113,9 +114,7 @@
                                             <div class="modal-body">
                                                 <p>
                                                     Sei sicuro di voler eliminare la nota del ticket:
-                                                    <strong>"[[${ticket.ticketTitle}]]"</strong> creata il
-                                                    <strong>[[*{noteCreationDate}]]</strong> con id
-                                                    <strong>[[*{noteId}]]</strong>?
+                                                    <strong>"[[${ticket.ticketTitle}]]"</strong> creata il <strong>[[*{noteCreationDate}]]</strong> con id <strong>[[*{noteId}]]</strong>?
                                                 </p>
                                             </div>
                                             <div class="modal-footer">

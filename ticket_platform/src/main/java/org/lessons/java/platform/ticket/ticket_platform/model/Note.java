@@ -15,17 +15,19 @@ import jakarta.persistence.GenerationType;
 
 @Entity
 public class Note {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer noteId;
 
     @NotBlank(message = "Il campo 'autore della nota' non può essere vuoto.")
-    @Lob
     private String noteAuthor;
 
     @PastOrPresent(message = "La data di creazione della nota non può essere nel futuro")
     private LocalDate noteCreationDate;
 
     @NotBlank(message = "Il testo della nota non può essere vuoto")
+    @Lob
     private String noteText;
 
     @ManyToOne

@@ -5,12 +5,17 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -36,11 +41,9 @@ public class Ticket {
     private String ticketDetails;
 
     @NotNull(message = "Lo stato del ticket deve essere esplicitato")
-    private String ticketState;
+    @Enumerated(EnumType.STRING)
+    private TicketState ticketState;
 
-    @NotBlank (message = "L'operatore assegnato dev'essere specificato")
-    @Size(min = 3, message = "Il nome dell'operatore assegnato deve avere almeno 3 caratteri")
-    private String assignedOperator;
 
     @PastOrPresent
     @NotNull (message = "La data del ticket non può essere vuota")
@@ -49,6 +52,32 @@ public class Ticket {
     @OneToMany (mappedBy = "ticket", cascade = {CascadeType.REMOVE})
     private List <Note> notes;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    @Valid
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "operator_id", nullable = false)
+    @Valid
+    private Operator assignedOperator;
+
+
+    public Operator getAssignedOperator() {
+        return this.assignedOperator;
+    }
+
+    public void setAssignedOperator(Operator assignedOperator) {
+        this.assignedOperator = assignedOperator;
+    }
+
+    public Category getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public List<Note> getNotes() {
         return this.notes;
@@ -58,7 +87,6 @@ public class Ticket {
         this.notes = notes;
     }
 
-
     public Integer getTicketId() {
         return this.ticketId;
     }
@@ -67,7 +95,6 @@ public class Ticket {
         this.ticketId = ticketId;
     }
  
-
     public String getTicketTitle() {
         return this.ticketTitle;
     }
@@ -75,7 +102,6 @@ public class Ticket {
     public void setTicketTitle(String ticketTitle) {
         this.ticketTitle = ticketTitle;
     }
-
 
     public String getTicketCreator() {
         return this.ticketCreator;
@@ -85,7 +111,6 @@ public class Ticket {
         this.ticketCreator = ticketCreator;
     }
 
-
     public String getTicketDetails() {
         return this.ticketDetails;
     }
@@ -93,22 +118,13 @@ public class Ticket {
     public void setTicketDetails(String ticketDetails) {
         this.ticketDetails = ticketDetails;
     }
-   
 
-    public String getTicketState() {
+    public TicketState getTicketState() {
         return this.ticketState;
     }
 
-    public void setTicketState(String ticketState) {
+    public void setTicketState(TicketState ticketState) {
         this.ticketState = ticketState;
-    }
-
-    public String getAssignedOperator() {
-        return this.assignedOperator;
-    }
-
-    public void setAssignedOperator(String assignedOperator) {
-        this.assignedOperator = assignedOperator;
     }
 
     public LocalDate getTicketDate() {

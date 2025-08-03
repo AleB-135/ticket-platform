@@ -67,6 +67,23 @@
                         </div>
                     </div>
 
+                    
+                    <div class="col-md-12 mb-3" >
+                        <label for="ticket-category" class="form-label">Categoria ticket</label>
+                        <select class="form-select" aria-label="Default select example"
+                            th:field="*{category.categoryId}" th:errorClass="is-invalid" required>
+                            <option th:each="category : ${categories}" th:value="${category.categoryId}"
+                                th:text="${category.categoryName}">
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('category.categoryId')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('category.categoryId')}" th:text="${error}">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
 
                     <div class="mb-3">
                         <label for="dettagli-ticket" class="form-label">Dettagli ticket:</label>
@@ -85,21 +102,21 @@
                         <div class="mb-3">
                             <label for="ticket-state" class="form-label">Stato ticket:</label>
                             <div class="form-check">
-                                <input value="Da fare" class="form-check-input" type="radio" id="todo-ticket" th:field="*{ticketState}"
+                                <input value="DA_FARE" class="form-check-input" type="radio" id="todo-ticket" th:field="*{ticketState}"
                                 th:errorClass="is-invalid" required>
                                 <label class="form-check-label" for="todo-ticket">
                                     Da fare
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input value="In corso" class="form-check-input" type="radio" id="current-ticket" th:field="*{ticketState}"
+                                <input value="IN_CORSO" class="form-check-input" type="radio" id="current-ticket" th:field="*{ticketState}"
                                 th:errorClass="is-invalid" required>
                                 <label class="form-check-label" for="current-ticket">
                                     In corso
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input value="Completato" class="form-check-input" type="radio" id="completed-ticket" th:field="*{ticketState}"
+                                <input value="COMPLETATO" class="form-check-input" type="radio" id="completed-ticket" th:field="*{ticketState}"
                                 th:errorClass="is-invalid" required>
                                 <label class="form-check-label" for="completed-ticket">
                                     Completato
@@ -108,36 +125,28 @@
                         </div>
 
 
-                        <div class="mb-3">
-                            <label for="operators" class="form-label">Operatore assegnato:</label>
-                            <div class="form-check">
-                                <input value="M. Rossi" class="form-check-input" type="radio" id="operator-rossi" th:field="*{assignedOperator}"
-                                th:errorClass="is-invalid" required>
-                                <label class="form-check-label" for="operator-rossi">
-                                    M. Rossi
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input value="P. Vitali" class="form-check-input" type="radio" id="operator-vitali" th:field="*{assignedOperator}"
-                                th:errorClass="is-invalid" required>
-                                <label class="form-check-label" for="operator-vitali">
-                                    P. Vitali
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input value="D. Ferri" class="form-check-input" type="radio" id="operator-ferri" th:field="*{assignedOperator}"
-                                th:errorClass="is-invalid" required>
-                                <label class="form-check-label" for="operator-ferri">
-                                    D. Ferri
-                                </label>
-                            </div>
+                      <div class="col-md-6">
+                        <label for="inputState" class="form-label">Operatore assegnato</label>
+                        <select class="form-select" th:field="*{assignedOperator.operatorId}" required>
+                            <option disabled selected value="">Seleziona un operatore</option>
+                            <!-- <option value="1">P. Vitali</option>
+                            <option value="2">D. Ferri</option>
+                            <option value="3">M. Rossi</option> -->
+                            <option th:each="operator : ${operators}" th:value="${operator.operatorId}"
+                                th:text="${operator.operatorName}">
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('assignedOperator.operatorId')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('assignedOperator.operatorId')}" th:text="${error}"></li>
+                            </ul>
                         </div>
                     </div>
 
                     <!-- BOTTONI MODIFICA & RESET -->
                     <div class="mb-3 d-flex justify-content-evenly">
-                        <button class="btn btn-primary w-25" type="submit">Modifica ticket</button>
-                        <button class="btn btn-warning w-25" type="reset">Reset</button>
+                        <button class="btn btn-primary m-3 w-50" type="submit">Modifica ticket</button>
+                        <button class="btn btn-warning m-3 w-50" type="reset">Reset</button>
                     </div>
                 </form>
             </div>

@@ -1,9 +1,14 @@
 package org.lessons.java.platform.ticket.ticket_platform.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -13,20 +18,29 @@ public class Operator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer operatorId;
 
-    @NotNull (message = "Il nome dell'operatore deve essere esplicitato")
+    @NotNull (message = "Il nome deve essere esplicitato")
     private String operatorName;
 
-    @NotNull (message = "L'email dell'operatore deve essere esplicitata")
+    @NotNull (message = "L'email deve essere esplicitata")
     private String operatorEmail;
 
-    @NotNull (message = "La password dell'operatore deve essere esplicitata")
+    @NotNull (message = "La password deve essere esplicitata")
     private String operatorPassword;
 
-    private boolean notAvailable;
+    @Column (nullable = false)
+    private boolean isAvailable;
 
-    //@OneToMany(mappedBy = "operator", cascade = {CascadeType.REMOVE})
-    //private List<Ticket> tikets;
+    @OneToMany(mappedBy = "assignedOperator", cascade = {CascadeType.REMOVE})
+    private List<Ticket> tickets;
 
+
+    public List<Ticket> getTickets() {
+        return this.tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
 
     public Integer getOperatorId() {
         return this.operatorId;
@@ -60,16 +74,17 @@ public class Operator {
         this.operatorPassword = operatorPassword;
     }
 
-    public boolean isNotAvailable() {
-        return this.notAvailable;
+    public boolean isAvailable() {
+        return this.isAvailable;
     }
 
-    public boolean getNotAvailable() {
-        return this.notAvailable;
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
-    public void setNotAvailable(boolean notAvailable) {
-        this.notAvailable = notAvailable;
-    }
+    @Override
+    public String toString() {
+        return this.operatorName;
+}
 
 }
