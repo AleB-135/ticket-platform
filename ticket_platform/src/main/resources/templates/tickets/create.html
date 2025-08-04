@@ -96,7 +96,6 @@
                     <div class="col-md-6">
                         <label for="inputState" class="form-label">Operatore da assegnare</label>
                         <select class="form-select" id="inputState" th:field="*{assignedOperator.operatorId}" required>
-                            
                             <option th:each="operator : ${operators}" th:value="${operator.operatorId}"
                                 th:text="${operator.operatorName}">
                             </option>
