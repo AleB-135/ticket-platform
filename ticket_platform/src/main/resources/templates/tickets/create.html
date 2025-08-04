@@ -25,8 +25,8 @@
 
 
                 <!-- GESTIONE CREAZIONE CON POST -->
-                <form class="row g-3" th:action="@{/tickets}" method="POST" th:object="${ticket}">
-                    <input type="hidden" th:field="*{ticketId}">
+                <form class="row g-3" th:action="@{/tickets/create}" method="POST" th:object="${ticket}">
+                    
                     <!-- FORM DETTAGLI TICKET (CREATORE, TITOLO, DATA...) -->
                     <div class="col-md-12">
                         <label for="creatore-ticket" class="form-label">Creatore ticket</label>
@@ -96,7 +96,6 @@
                     <div class="col-md-6">
                         <label for="inputState" class="form-label">Operatore da assegnare</label>
                         <select class="form-select" id="inputState" th:field="*{assignedOperator.operatorId}" required>
-                            <option disabled selected value="">Seleziona un operatore</option>
                             
                             <option th:each="operator : ${operators}" th:value="${operator.operatorId}"
                                 th:text="${operator.operatorName}">

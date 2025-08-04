@@ -11,11 +11,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -35,7 +33,7 @@ public class Ticket {
     @NotBlank(message = "Il nome del creatore del ticket non può essere vuoto")
     private String ticketCreator;
 
-    @Lob
+    
     @Size(min = 10, max = 2000, message = "Il ticket deve avere un minimo di 10 caratteri e un massimo di 2000")
     @NotBlank(message = "I dettagli del ticket non possono essere vuoti")
     private String ticketDetails;
@@ -54,12 +52,10 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    @Valid
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
-    @Valid
     private Operator assignedOperator;
 
 

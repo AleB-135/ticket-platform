@@ -62,6 +62,7 @@ public class TicketController {
 
         Ticket ticket = new Ticket();
         ticket.setTicketDate(LocalDate.now());
+        ticket.setTicketState(TicketState.DA_FARE); 
         model.addAttribute("ticket", ticket);
         model.addAttribute("operators", operatorRepository.findByIsAvailableTrue());
         model.addAttribute("categories", categoryRepository.findAll());
@@ -69,7 +70,7 @@ public class TicketController {
         return "tickets/create";
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public String save(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model) {
 
         if (formTicket.getAssignedOperator() == null || formTicket.getAssignedOperator().getOperatorId() == null) {
@@ -81,6 +82,19 @@ public class TicketController {
         }
 
         if (bindingResult.hasErrors()) {
+            // --- INIZIO: AGGIUNGI QUESTE RIGHE PER IL DEBUG ---
+        System.err.println("------------------------------------");
+        System.err.println("Errori di validazione nel form ticket:");
+        bindingResult.getAllErrors().forEach(error -> {
+            if (error instanceof org.springframework.validation.FieldError) {
+                org.springframework.validation.FieldError fieldError = (org.springframework.validation.FieldError) error;
+                System.err.println("Campo: " + fieldError.getField() + ", Valore rifiutato: '" + fieldError.getRejectedValue() + "', Messaggio: " + fieldError.getDefaultMessage());
+            } else {
+                System.err.println("Errore globale: " + error.getDefaultMessage());
+            }
+        });
+        System.err.println("------------------------------------");
+        // --- FINE: RIGHE AGGIUNTE PER IL DEBUG ---
             model.addAttribute("operators", operatorRepository.findByIsAvailableTrue());
             model.addAttribute("categories", categoryRepository.findAll());
             model.addAttribute("ticketStates", TicketState.values());
